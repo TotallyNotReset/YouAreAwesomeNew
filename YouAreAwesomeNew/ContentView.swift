@@ -10,39 +10,39 @@ import SwiftUI
 struct ContentView: View {
     @State private var message = ""
     @State private var imageName = ""
+    @State private var imageNumber = 0
+    @State private var messageNumber = 0
     var body: some View {
         
         VStack {
-            Spacer()
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius:30))
-                .shadow(radius: 30)
-            
             
             Text(message)
                 .font(.largeTitle)
                 .fontWeight(.heavy)
                 .foregroundStyle(.red)
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.5)
+                .frame(height: 100)
+
+            Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .clipShape(RoundedRectangle(cornerRadius:30))
+                .shadow(radius: 30)
+                .animation(.easeInOut(duration: 0.15), value: imageName)
+            
             Spacer()
             
-            Button("Press Me!") {
-                let message1 = "You are Awesome!"
-                let message2 = "You are Great!"
-//                let imageString1 = "hand.thumbsup"
-//                let imageString2 = "sun.max.fill"
-//                
-//                if message == message1 {
-//                    message = message2
-//                    imageString = imageString2
-//                } else {
-//                    message = message1
-//                    imageString = imageString1
-//                }
+            Button("Show Message") {
+                let messages = ["You Are Awesome!",
+                                "You Are Great!", "You Are Fantastic!",
+                                "Fabulous? That's You!", "You Make Me Smile!", "When the Genius Bar Needs Help, They Call You!"]
                 
-                message = (message == message1 ? message2: message1)
-                imageName = ( imageName == "image2" ? "image3" : "image2" )
+                message = messages[Int.random(in: 0...messages.count-1)]
+
+                
+                imageName = "image\(Int.random(in: 0...9))"
+
             }
             .buttonStyle(.borderedProminent)
             .font(.title2)
